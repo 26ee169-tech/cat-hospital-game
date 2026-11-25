@@ -1,0 +1,517 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Cute Cat Hospital</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffe0ef, #eadfff, #ddf6ff);
+    color: #795476;
+    min-height: 100vh;
+    padding: 18px;
+}
+
+.container {
+    max-width: 850px;
+    margin: auto;
+    background: #fffaff;
+    border: 4px solid white;
+    border-radius: 25px;
+    padding: 22px;
+    text-align: center;
+    box-shadow: 0 8px 30px #c48ab855;
+}
+
+h1 {
+    color: #e77eb0;
+    margin-bottom: 8px;
+    font-size: 30px;
+}
+
+.subtitle {
+    color: #a17bb3;
+    margin-bottom: 20px;
+}
+
+.stats {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.stat {
+    flex: 1;
+    padding: 12px 5px;
+    background: #ffeaf3;
+    border: 2px solid #f8cde0;
+    border-radius: 14px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.stat span {
+    display: block;
+    color: #dc70a6;
+    font-size: 22px;
+    margin-top: 5px;
+}
+
+.patient {
+    background: #f3eaff;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 18px;
+}
+
+.cat {
+    font-size: 85px;
+    margin: 12px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+.cat-name {
+    font-size: 23px;
+    color: #d86da4;
+    font-weight: bold;
+}
+
+.problem {
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+.section {
+    background: #fff0f7;
+    padding: 17px;
+    border-radius: 17px;
+    margin-top: 15px;
+}
+
+h2 {
+    font-size: 19px;
+    color: #b176bf;
+    margin-bottom: 12px;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.option {
+    padding: 13px 7px;
+    background: white;
+    border: 2px solid #f1cce2;
+    border-radius: 13px;
+    color: #805b82;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.option:hover {
+    background: #ffe0ef;
+    border-color: #e77eb0;
+}
+
+.option:disabled {
+    opacity: 0.55;
+    cursor: default;
+}
+
+.action {
+    border: none;
+    background: #e982b4;
+    color: white;
+    padding: 13px 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 6px;
+    font-size: 14px;
+}
+
+.action:hover {
+    background: #d7659d;
+}
+
+.secondary {
+    background: #ac8ad0;
+}
+
+.message {
+    min-height: 45px;
+    padding: 13px;
+    margin-top: 12px;
+    background: #f4eaff;
+    border-radius: 12px;
+    color: #986bb3;
+    line-height: 1.5;
+    font-weight: bold;
+}
+
+.footer {
+    margin-top: 20px;
+    color: #b68bb7;
+    font-size: 13px;
+}
+
+@media(max-width: 480px) {
+    .container { padding: 13px; }
+    h1 { font-size: 24px; }
+    .cat { font-size: 68px; }
+    .options { gap: 7px; }
+    .option { font-size: 12px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🐾 MY CUTE CAT HOSPITAL 🏥</h1>
+
+    <p class="subtitle">
+        Welcome, little doctor! Let's make every kitty healthy!
+    </p>
+
+    <div class="stats">
+
+        <div class="stat">
+            ⭐ SCORE
+            <span id="score">0</span>
+        </div>
+
+        <div class="stat">
+            🪙 COINS
+            <span id="coins">0</span>
+        </div>
+
+        <div class="stat">
+            🐱 PATIENTS
+            <span id="patients">0</span>
+        </div>
+
+    </div>
+
+    <div class="patient">
+
+        <p>YOUR LITTLE PATIENT</p>
+
+        <div class="cat" id="cat">🐱</div>
+
+        <div class="cat-name" id="catName">
+            Mimi
+        </div>
+
+        <p class="problem" id="symptoms">
+            Your kitty is waiting for a check-up!
+        </p>
+
+    </div>
+
+    <div class="section">
+
+        <h2>🩺 Step 1: Examine Your Patient</h2>
+
+        <button class="action" onclick="examineCat()">
+            🔍 Examine Cat
+        </button>
+
+        <p id="diagnosis" class="message">
+            Examine your cat to discover the problem.
+        </p>
+
+    </div>
+
+    <div class="section">
+
+        <h2>💊 Step 2: Choose the Treatment</h2>
+
+        <div class="options" id="treatments">
+
+            <button class="option" onclick="treatCat('medicine')">
+                💊 Medicine
+            </button>
+
+            <button class="option" onclick="treatCat('bandage')">
+                🩹 Bandage
+            </button>
+
+            <button class="option" onclick="treatCat('bath')">
+                🛁 Warm Bath
+            </button>
+
+            <button class="option" onclick="treatCat('food')">
+                🥛 Healthy Food
+            </button>
+
+            <button class="option" onclick="treatCat('rest')">
+                🛏️ Rest
+            </button>
+
+            <button class="option" onclick="treatCat('brush')">
+                🪮 Grooming
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="message" id="message">
+        💗 Examine your patient and provide the right treatment!
+    </div>
+
+    <button class="action" onclick="nextPatient()">
+        🐾 NEXT PATIENT
+    </button>
+
+    <button class="action secondary" onclick="restartGame()">
+        🔄 RESTART GAME
+    </button>
+
+    <p class="footer">
+        💗 Every kitty deserves love and care! 💗
+    </p>
+
+</div>
+
+<script>
+
+const cats = [
+    {
+        name: "Mimi",
+        emoji: "🐱",
+        symptoms: "Mimi has a little fever and feels tired.",
+        diagnosis: "Mimi has a fever. She needs medicine.",
+        treatment: "medicine"
+    },
+    {
+        name: "Snowy",
+        emoji: "🐈",
+        symptoms: "Snowy has a small scratch on her paw.",
+        diagnosis: "Snowy has a minor paw injury. She needs a bandage.",
+        treatment: "bandage"
+    },
+    {
+        name: "Bella",
+        emoji: "🐈‍⬛",
+        symptoms: "Bella's fur is very dirty.",
+        diagnosis: "Bella needs a gentle cleaning bath.",
+        treatment: "bath"
+    },
+    {
+        name: "Cookie",
+        emoji: "🐈",
+        symptoms: "Cookie is hungry and has low energy.",
+        diagnosis: "Cookie needs nutritious food.",
+        treatment: "food"
+    },
+    {
+        name: "Luna",
+        emoji: "😺",
+        symptoms: "Luna looks sleepy and tired.",
+        diagnosis: "Luna needs a peaceful rest.",
+        treatment: "rest"
+    },
+    {
+        name: "Mochi",
+        emoji: "😻",
+        symptoms: "Mochi's fur is tangled and messy.",
+        diagnosis: "Mochi needs gentle brushing and grooming.",
+        treatment: "brush"
+    }
+];
+
+let score = 0;
+let coins = 0;
+let patients = 0;
+
+let currentCat;
+let examined = false;
+let treated = false;
+let gameStarted = false;
+
+function updateStats() {
+
+    document.getElementById("score").textContent = score;
+    document.getElementById("coins").textContent = coins;
+    document.getElementById("patients").textContent = patients;
+
+}
+
+// Select a new cat
+function nextPatient() {
+
+    if (treated === false && gameStarted) {
+
+        document.getElementById("message").textContent =
+            "Please complete the current patient's treatment first!";
+
+        return;
+    }
+
+    currentCat =
+        cats[Math.floor(Math.random() * cats.length)];
+
+    examined = false;
+    treated = false;
+    gameStarted = true;
+
+    document.getElementById("cat").textContent =
+        currentCat.emoji;
+
+    document.getElementById("catName").textContent =
+        currentCat.name;
+
+    document.getElementById("symptoms").textContent =
+        currentCat.symptoms;
+
+    document.getElementById("diagnosis").textContent =
+        "Examine your cat to discover the problem.";
+
+    document.getElementById("message").textContent =
+        "A new kitty has arrived! Let's help! 💗";
+
+    document.querySelectorAll(".option").forEach(button => {
+        button.disabled = false;
+    });
+
+}
+
+// Examine patient
+function examineCat() {
+
+    if (!gameStarted || treated) {
+        document.getElementById("message").textContent =
+            "Please welcome your next patient first!";
+        return;
+    }
+
+    examined = true;
+
+    document.getElementById("diagnosis").textContent =
+        "🩺 Diagnosis: " + currentCat.diagnosis;
+
+    document.getElementById("message").textContent =
+        "Now choose the correct treatment!";
+
+}
+
+// Treat patient
+function treatCat(choice) {
+
+    if (!gameStarted) {
+
+        document.getElementById("message").textContent =
+            "Click NEXT PATIENT to welcome a kitty!";
+        return;
+
+    }
+
+    if (!examined) {
+
+        document.getElementById("message").textContent =
+            "🔍 Examine the cat before choosing treatment!";
+        return;
+
+    }
+
+    if (treated) {
+
+        document.getElementById("message").textContent =
+            "This kitty has already been treated! 💗";
+        return;
+
+    }
+
+    if (choice === currentCat.treatment) {
+
+        treated = true;
+
+        score += 20;
+        coins += 10;
+        patients++;
+
+        document.getElementById("cat").textContent = "😻";
+
+        document.getElementById("message").textContent =
+            "🎉 Correct treatment! " +
+            currentCat.name +
+            " is feeling much better! +20 points and +10 coins!";
+
+        document.getElementById("diagnosis").textContent =
+            "💗 Treatment successful! Patient is happy.";
+
+        document.querySelectorAll(".option").forEach(button => {
+            button.disabled = true;
+        });
+
+        updateStats();
+
+    } else {
+
+        document.getElementById("message").textContent =
+            "Oops! That's not the right treatment. " +
+            "Check the diagnosis again! 🐾";
+
+    }
+
+}
+
+// Restart game
+function restartGame() {
+
+    score = 0;
+    coins = 0;
+    patients = 0;
+
+    examined = false;
+    treated = true;
+    gameStarted = false;
+
+    updateStats();
+
+    document.getElementById("cat").textContent = "🐱";
+
+    document.getElementById("catName").textContent =
+        "New Kitty";
+
+    document.getElementById("symptoms").textContent =
+        "Welcome to your hospital!";
+
+    document.getElementById("diagnosis").textContent =
+        "Click NEXT PATIENT to begin.";
+
+    document.getElementById("message").textContent =
+        "🏥 Your hospital is ready!";
+
+    document.querySelectorAll(".option").forEach(button => {
+        button.disabled = false;
+    });
+
+}
+
+restartGame();
+
+</script>
+
+</body>
+</html>
